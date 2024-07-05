@@ -95,8 +95,8 @@ class pgeDescartes : public olc::PixelGameEngine {
     }
     // Draw cursor position
     olc::vf2d cur_coor;
-    ScreenToWorld(cur_mouse.x, cur_mouse.y, cur_coor);
-		DrawString(10, 10, "X=" + std::to_string(cur_coor.x) + ", Y=" + std::to_string(cur_coor.y), olc::YELLOW, 2);
+    ScreenToWorld(cur_mouse.x, cur_mouse.y, cur_coor); cur_coor = -cur_coor;
+		DrawString(10, 10, "X=" + std::to_string(cur_coor.x) + ", Y=" + std::to_string(cur_coor.y), olc::YELLOW, 1);
     return true;
   }
 };
