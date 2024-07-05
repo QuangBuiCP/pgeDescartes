@@ -4,9 +4,9 @@ find_package(OpenGL REQUIRED)
 include_directories(${OpenGL_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} ${OpenGL_LIBRARIES} OpenGL::GL)
 
-if (NOT HAS_TERMINAL)
-target_link_libraries(${PROJECT_NAME} -mwindows -municode)
-endif (NOT HAS_TERMINAL)
+# if (NOT HAS_TERMINAL)
+# target_link_libraries(${PROJECT_NAME} -mwindows -municode)
+# endif (NOT HAS_TERMINAL)
 
 # GDI+
 set(GDIPLUS_LIBRARY gdiplus)
