@@ -45,11 +45,11 @@ class pgeDescartes : public olc::PixelGameEngine {
     olc::vf2d cur_mouse = {(float)GetMouseX(), (float)GetMouseY()};
     bool changing_state = false;
     // Handle panning & zooming
-    if (GetMouse(2).bPressed) {
+    if (GetMouse(1).bPressed) {
       start_pan = cur_mouse;
       changing_state = true;
     }
-    if (GetMouse(2).bHeld) {
+    if (GetMouse(1).bHeld) {
       offset -= (cur_mouse - start_pan) / scale;
       start_pan = cur_mouse;
       changing_state = true;
@@ -115,9 +115,12 @@ class pgeDescartes : public olc::PixelGameEngine {
       WorldToScreen({0, y}, sx, sy);
       FillCircle(sx, sy, 2, olc::YELLOW);
     }
+    // Draw bigger root point
+    WorldToScreen({0, 0}, sx, sy);
+    FillCircle(sx, sy, 4, olc::WHITE);
     // Check if coor is drawable
     bool drawable_coor = true;
-    if (grid_edge * scale < 16) {
+    if (grid_edge * scale < 7) {
       drawable_coor = false;
     }
     {
@@ -125,12 +128,12 @@ class pgeDescartes : public olc::PixelGameEngine {
       olc::vi2d vStringSize;
       s = std::to_string((int)world_topleft.x);
       vStringSize = GetTextSize(s);
-      if (grid_edge * scale < vStringSize.x + 12) {
+      if (grid_edge * scale < vStringSize.x + 10) {
         drawable_coor = false;
       }
       s = std::to_string((int)world_bottomright.x);
       vStringSize = GetTextSize(s);
-      if (grid_edge * scale < vStringSize.x + 12) {
+      if (grid_edge * scale < vStringSize.x + 10) {
         drawable_coor = false;
       }
     }
