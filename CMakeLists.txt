@@ -46,5 +46,6 @@ add_link_options(-static-libgcc)
 add_link_options(-static-libstdc++)
 
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCE_DIR}/app/main.cpp ${cpp_files})
+target_precompile_headers(${PROJECT_NAME} PUBLIC "include/olcPixelGameEngine.h")
 
 include(cmake/pge.cmake)
