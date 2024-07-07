@@ -23,13 +23,23 @@ void pgeDescartes::ScreenToWorld(int nScreenX, int nScreenY, olc::vf2d& v) {
   v.y = (float)(nScreenY) / scale + offset.y;
 }
 
-void pgeDescartes::MyDrawString(int x, int y, std::string s, olc::Pixel color,
-                                int nScale) {
+void pgeDescartes::MyDrawString(int x, int y, const std::string& s,
+                                olc::Pixel color, int nScale) {
   olc::vi2d vStringSize = GetTextSize(s);
   FillRect(x - 4, y - 4, vStringSize.x * nScale + 6, vStringSize.y * nScale + 6,
            olc::BLACK);
   DrawString(x, y, s, color, nScale);
 }
+
+olc::vf2d pgeDescartes::GetOffset() {
+  return offset;
+}
+
+float pgeDescartes::GetScale() {
+  return scale;
+}
+
+// =========================================
 
 bool pgeDescartes::OnUserCreate() /* override */ {
   offset = {((float)(-ScreenWidth()) / 2) / scale,
@@ -154,6 +164,12 @@ bool pgeDescartes::OnUserUpdate(float fElapsedTime) /* override */ {
       DrawString(sx - GetTextSize(s).x / 2, sy - 12, s, olc::YELLOW, 1);
     }
   }
+
+  // =========================================
+
+  ;
+
+  // =========================================
 
   if (changing_state) {
     std::cout << "scale: " << scale << '\n';

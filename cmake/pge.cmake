@@ -29,11 +29,23 @@ endif() # NOT USE_SDL2_MIXER
 # To copy assets/
 
 set(PGE_ASSET_FOLDER "${CMAKE_SOURCE_DIR}/assets")
-set(SOURCE_DATA_DIR        ${CMAKE_CURRENT_SOURCE_DIR}/assets)
-set(SOURCE_CXX_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
-set(SOURCE_CXX_SRC_DIR     ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(ASSET_OUTPUT_DIR ${CMAKE_BINARY_DIR}/bin/assets/)
 
-set(DATA_OUTPUT_DIR ${CMAKE_BINARY_DIR}/bin/assets/)
+file(GLOB_RECURSE src_data_files RELATIVE ${SOURCE_DATA_DIR}/ "${SOURCE_DATA_DIR}/*.*" "${SOURCE_DATA_DIR}/*")
+foreach(fn ${src_data_files})
+  add_custom_command(
+    OUTPUT ${ASSET_OUTPUT_DIR}/${fn}
+    COMMAND ${CMAKE_COMMAND} -E copy ${SOURCE_DATA_DIR}/${fn} ${ASSET_OUTPUT_DIR}/${fn}
+    MAIN_DEPENDENCY ${SOURCE_DATA_DIR}/${fn})
+  list(APPEND out_asset_files ${ASSET_OUTPUT_DIR}/${fn})
+endforeach()
+
+add_custom_target(copy_asset DEPENDS ${out_asset_files})
+
+# To copy data
+
+set(PGE_DATA_FOLDER "${CMAKE_SOURCE_DIR}/data")
+set(DATA_OUTPUT_DIR ${CMAKE_BINARY_DIR}/bin/data/)
 
 file(GLOB_RECURSE src_data_files RELATIVE ${SOURCE_DATA_DIR}/ "${SOURCE_DATA_DIR}/*.*" "${SOURCE_DATA_DIR}/*")
 foreach(fn ${src_data_files})

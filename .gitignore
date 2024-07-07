@@ -43,3 +43,6 @@ testcases/
 
 # clangd cache
 .cache/
+
+# data file
+data/
