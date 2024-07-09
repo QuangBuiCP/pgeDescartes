@@ -26,40 +26,45 @@ set(WINMM_LIBRARY winmm)
 target_link_libraries(${PROJECT_NAME} ${WINMM_LIBRARY})
 endif() # NOT USE_SDL2_MIXER
 
+
 # To copy assets/
 
-set(SOURCE_DATA_DIR        ${CMAKE_CURRENT_SOURCE_DIR}/assets)
-set(SOURCE_CXX_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
-set(SOURCE_CXX_SRC_DIR     ${CMAKE_CURRENT_SOURCE_DIR}/src)
+# set(SOURCE_ASSET_DIR ${PROJECT_SOURCE_DIR}/assets)
+# set(ASSET_OUTPUT_DIR ${CMAKE_BINARY_DIR}/bin/assets)
 
-set(PGE_ASSET_FOLDER "${CMAKE_SOURCE_DIR}/assets")
-set(ASSET_OUTPUT_DIR ${CMAKE_BINARY_DIR}/bin/assets/)
+# file(GLOB_RECURSE src_asset_files RELATIVE ${SOURCE_ASSET_DIR}/ "${SOURCE_ASSET_DIR}/*.*" "${SOURCE_ASSET_DIR}/*")
+# foreach(fn ${src_asset_files})
+#   add_custom_command(
+#     OUTPUT ${ASSET_OUTPUT_DIR}/${fn}
+#     COMMAND ${CMAKE_COMMAND} -E copy ${SOURCE_ASSET_DIR}/${fn} ${ASSET_OUTPUT_DIR}/${fn}
+#     MAIN_DEPENDENCY ${SOURCE_ASSET_DIR}/${fn})
+#   list(APPEND out_asset_files ${ASSET_OUTPUT_DIR}/${fn})
+# endforeach()
 
-file(GLOB_RECURSE src_asset_files RELATIVE ${SOURCE_DATA_DIR}/ "${SOURCE_DATA_DIR}/*.*" "${SOURCE_DATA_DIR}/*")
-foreach(fn ${src_asset_files})
-  add_custom_command(
-    OUTPUT ${ASSET_OUTPUT_DIR}/${fn}
-    COMMAND ${CMAKE_COMMAND} -E copy ${SOURCE_DATA_DIR}/${fn} ${ASSET_OUTPUT_DIR}/${fn}
-    MAIN_DEPENDENCY ${SOURCE_DATA_DIR}/${fn})
-  list(APPEND out_asset_files ${ASSET_OUTPUT_DIR}/${fn})
-endforeach()
-
-add_custom_target(copy_asset DEPENDS ${out_asset_files})
+add_custom_command(
+  TARGET ${PROJECT_NAME} POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_directory
+          ${CMAKE_SOURCE_DIR}/assets
+          ${CMAKE_BINARY_DIR}/bin/assets)
 
 # To copy data/
 
-set(PGE_DATA_FOLDER "${CMAKE_SOURCE_DIR}/data")
-set(DATA_OUTPUT_DIR ${CMAKE_BINARY_DIR}/bin/data/)
+# set(SOURCE_DATA_DIR ${PROJECT_SOURCE_DIR}/data)
+# set(DATA_OUTPUT_DIR ${CMAKE_BINARY_DIR}/bin/data)
 
-file(GLOB_RECURSE src_data_files RELATIVE ${SOURCE_DATA_DIR}/ "${SOURCE_DATA_DIR}/*.*" "${SOURCE_DATA_DIR}/*")
-foreach(fn ${src_data_files})
-  add_custom_command(
-    OUTPUT ${DATA_OUTPUT_DIR}/${fn}
-    COMMAND ${CMAKE_COMMAND} -E copy ${SOURCE_DATA_DIR}/${fn} ${DATA_OUTPUT_DIR}/${fn}
-    MAIN_DEPENDENCY ${SOURCE_DATA_DIR}/${fn})
-  list(APPEND out_data_files ${DATA_OUTPUT_DIR}/${fn})
-endforeach()
+# file(GLOB_RECURSE src_data_files RELATIVE ${SOURCE_DATA_DIR}/ "${SOURCE_DATA_DIR}/*.*" "${SOURCE_DATA_DIR}/*")
+# foreach(fn ${src_data_files})
+#   add_custom_command(
+#     OUTPUT ${DATA_OUTPUT_DIR}/${fn}
+#     COMMAND ${CMAKE_COMMAND} -E copy ${SOURCE_DATA_DIR}/${fn} ${DATA_OUTPUT_DIR}/${fn}
+#     MAIN_DEPENDENCY ${SOURCE_DATA_DIR}/${fn})
+#   list(APPEND out_data_files ${DATA_OUTPUT_DIR}/${fn})
+# endforeach()
 
-add_custom_target(copy_data DEPENDS ${out_data_files})
+add_custom_command(
+  TARGET ${PROJECT_NAME} POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_directory
+          ${CMAKE_SOURCE_DIR}/data
+          ${CMAKE_BINARY_DIR}/bin/data)
 
 target_link_libraries(${PROJECT_NAME} stdc++fs)

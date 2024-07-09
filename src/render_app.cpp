@@ -8,6 +8,7 @@ pgeDescartes::pgeDescartes() {
   grid_edge = 1.0f;
   cursor = {0.0f, 0.0f};
   last_cursor = {0.0f, 0.0f};
+  pointlist = PointList();
 }
 
 // Convert coordinates from World Space --> Screen Space
@@ -167,7 +168,13 @@ bool pgeDescartes::OnUserUpdate(float fElapsedTime) /* override */ {
 
   // =========================================
 
-  ;
+  // Load file point.txt and draw the list if pressed key 'L'
+  if (GetKey(olc::Key::L).bPressed) {
+    pointlist.ReadData("data/point.txt");
+  }
+  if (pointlist.Drawable()) {
+    pointlist.DrawGraph(this, offset, scale);
+  }
 
   // =========================================
 
