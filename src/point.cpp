@@ -41,7 +41,7 @@ bool PointList::ReadData(const std::string& filename) {
   float x, y;
   std::vector<Point> pending;
   while (fin >> x >> y) {
-    pending.push_back(Point({x, -y})); // kek
+    pending.push_back(Point({x, -y}));  // kek
   }
   std::sort(pending.begin(), pending.end());
   point.swap(pending);

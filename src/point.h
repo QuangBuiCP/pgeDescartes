@@ -15,9 +15,8 @@ class Point {
   olc::vf2d GetPos();
   void DrawMyPoint(olc::PixelGameEngine* pge, const olc::vf2d& offset,
                    const float& scale);
-  
 
-  bool operator < (const Point& other) const {
+  bool operator<(const Point& other) const {
     if (pos.x == other.pos.x) {
       return pos.y < other.pos.y;
     }
