@@ -178,12 +178,14 @@ bool pgeDescartes::OnUserUpdate(float fElapsedTime) /* override */ {
 
   // =========================================
 
+#if 0
   if (changing_state) {
     std::cout << "scale: " << scale << '\n';
     std::cout << "world: " << world_topleft.x << ' ' << world_topleft.y << "; "
               << world_bottomright.x << ' ' << world_bottomright.y << '\n';
     std::cout << "offset: " << offset.x << ' ' << offset.y << '\n';
   }
+#endif  // 0
   // Draw cursor position
   olc::vf2d cur_coor;
   ScreenToWorld(cur_mouse.x, cur_mouse.y, cur_coor);
